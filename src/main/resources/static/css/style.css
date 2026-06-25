@@ -1,0 +1,236 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: "Apple SD Gothic Neo", "Pretendard", system-ui, sans-serif;
+  background: linear-gradient(135deg, #eef2ff, #f6f9ff 45%, #fef2f8);
+  min-height: 100vh;
+  color: #1f2430;
+  padding: 40px 16px;
+}
+.page {
+  max-width: 1040px;
+  margin: 0 auto;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+.container {
+  flex: 1;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(40, 60, 120, 0.10);
+  padding: 28px;
+}
+.head h1 { font-size: 26px; }
+.subtitle { color: #8a90a2; margin: 6px 0 22px; font-size: 14px; }
+
+/* 입력 폼 */
+.form { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+.form input {
+  flex: 1;
+  min-width: 120px;
+  padding: 12px 14px;
+  border: 1px solid #e3e7f0;
+  border-radius: 12px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color .15s, box-shadow .15s;
+}
+.form input:focus { border-color: #6c8cff; box-shadow: 0 0 0 3px rgba(108, 140, 255, .15); }
+.btn-primary {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #6c8cff, #4f7cff);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform .1s, opacity .15s;
+}
+.btn-primary:hover { transform: translateY(-1px); }
+.btn-primary:disabled { opacity: .6; cursor: default; transform: none; }
+.form.shake { animation: shake .35s; }
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+
+/* 갤러리 (카드 그리드) */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 14px;
+}
+.empty { grid-column: 1 / -1; color: #aab; text-align: center; padding: 28px 0; }
+.card {
+  position: relative;
+  background: #fbfcff;
+  border: 1px solid #eef1f8;
+  border-radius: 16px;
+  padding: 18px 16px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  animation: fadeInUp .35s ease both;
+  transition: transform .12s, box-shadow .12s;
+}
+.card:hover { transform: translateY(-3px); box-shadow: 0 8px 22px rgba(60, 80, 160, .12); }
+.card.removing { animation: fadeOut .22s ease forwards; }
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes fadeOut { to { opacity: 0; transform: scale(.9); } }
+
+.avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, .12);
+}
+.card-id { position: absolute; top: 14px; right: 14px; font-size: 11px; color: #b9c0d4; }
+.card-name { font-weight: 700; font-size: 15px; }
+.card-msg { color: #5a6178; font-size: 14px; margin: 4px 0 8px; line-height: 1.4; word-break: break-word; }
+.card-date { font-size: 11px; color: #a8afc0; margin-bottom: 12px; }
+.card-actions { display: flex; gap: 6px; margin-top: auto; }
+.btn-view, .btn-edit, .btn-del, .btn-save, .btn-cancel {
+  border: none;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background .12s;
+}
+.btn-view { background: #eef2ff; color: #4f7cff; }
+.btn-view:hover { background: #e0e8ff; }
+.btn-edit { background: #eef7f0; color: #2e9e63; }
+.btn-edit:hover { background: #e0f1e6; }
+.btn-del { background: #fdeeee; color: #d2483c; }
+.btn-del:hover { background: #fadddd; }
+.btn-save { background: #2e9e63; color: #fff; }
+.btn-save:hover { background: #268555; }
+.btn-cancel { background: #f0f1f5; color: #888; }
+.btn-cancel:hover { background: #e6e7ed; }
+
+/* 카드 인라인 수정 폼 */
+.card.editing { gap: 8px; }
+.edit-input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #cfe3d6;
+  border-radius: 9px;
+  font-size: 13px;
+  outline: none;
+}
+.edit-input:focus { border-color: #2e9e63; box-shadow: 0 0 0 3px rgba(46, 158, 99, .15); }
+
+/* API 라이브 로그 콘솔 */
+.console {
+  width: 320px;
+  flex-shrink: 0;
+  background: #0f1426;
+  color: #cdd5f0;
+  border-radius: 20px;
+  padding: 18px;
+  box-shadow: 0 10px 40px rgba(15, 20, 38, .25);
+  position: sticky;
+  top: 40px;
+}
+.console-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+.console-clear {
+  background: transparent;
+  border: 1px solid #2c3454;
+  color: #8893bf;
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-size: 12px;
+  cursor: pointer;
+}
+.console-clear:hover { background: #1a2138; }
+.log {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 60vh;
+  overflow-y: auto;
+  font-family: ui-monospace, Menlo, monospace;
+}
+.log-empty { color: #5a648c; font-size: 12px; padding: 10px 0; font-family: inherit; }
+.log-row {
+  background: #161d33;
+  border-radius: 10px;
+  padding: 8px 10px;
+  font-size: 12px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 6px;
+  align-items: center;
+  animation: logIn .25s ease both;
+}
+@keyframes logIn { from { opacity: 0; transform: translateX(8px); } to { opacity: 1; transform: none; } }
+.log-method { font-weight: 700; padding: 1px 6px; border-radius: 6px; font-size: 11px; }
+.log-row.get .log-method { background: #13361f; color: #5fd08a; }
+.log-row.post .log-method { background: #13294a; color: #6ca6ff; }
+.log-row.put .log-method { background: #2c2a12; color: #e0c45f; }
+.log-row.delete .log-method { background: #3a1320; color: #ff7a93; }
+.log-path { color: #aeb7df; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.log-status { color: #7d88b3; font-size: 11px; }
+.log-note { grid-column: 1 / -1; color: #6f79a6; font-size: 11px; }
+.console-hint { color: #5a648c; font-size: 11px; margin-top: 12px; line-height: 1.5; }
+
+/* 단건 조회 모달 */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 26, 48, .45);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 50;
+}
+.modal.open { display: flex; animation: fadeIn .15s; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.modal-card {
+  position: relative;
+  background: #fff;
+  border-radius: 20px;
+  padding: 32px;
+  width: 100%;
+  max-width: 340px;
+  text-align: center;
+  animation: pop .2s ease both;
+}
+@keyframes pop { from { opacity: 0; transform: scale(.92); } to { opacity: 1; transform: none; } }
+.modal-close { position: absolute; top: 14px; right: 16px; border: none; background: transparent; font-size: 18px; color: #aab; cursor: pointer; }
+.avatar-lg { width: 72px; height: 72px; font-size: 30px; margin: 0 auto 14px; }
+.modal-name { font-size: 20px; }
+.modal-msg { color: #5a6178; margin: 8px 0 16px; line-height: 1.5; word-break: break-word; }
+.modal-meta {
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 12px;
+  color: #9aa2bd;
+  background: #f4f6fc;
+  border-radius: 8px;
+  padding: 6px 10px;
+  display: inline-block;
+}
+.modal-dates { font-size: 12px; color: #8a90a2; margin-bottom: 12px; }
+.modal-error { color: #d2483c; }
+
+/* 반응형: 좁은 화면에선 콘솔을 아래로 */
+@media (max-width: 880px) {
+  .page { flex-direction: column; }
+  .console { width: 100%; position: static; }
+}
